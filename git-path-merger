@@ -1,0 +1,14 @@
+#!/bin/bash
+
+function movefile {
+    from_location=$1
+    to_location=${from_location/$2/$3}
+    echo "moving $from_location > $to_location"
+    mkdir -p $(dirname $to_location)
+    git mv $from_location $to_location
+}
+
+find $1 -type f -print0 | while read -d $'\0' file;
+do
+    movefile "$file" "$1" "$2";
+done
